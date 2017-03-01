@@ -57,6 +57,9 @@ module load default-wilkes                 # REQUIRED - loads the basic environm
 # change the next line to: module add R/3.3.0
 module add R
 
+# Change this to the name of the R script you want to run
+rscript="myrscript.R"
+
 #! Full path to application executable:
 application="R"
 
@@ -95,7 +98,7 @@ export I_MPI_PIN_ORDER=scatter # Adjacent domains have minimal sharing of caches
 
 #! Choose this for a pure shared-memory OpenMP parallel program on a single node:
 #! (OMP_NUM_THREADS threads will be created):
-CMD="$application $options"
+CMD="$application $options $rscript"
 
 #! Choose this for a MPI code (possibly using OpenMP) using OpenMPI:
 #CMD="mpirun -npernode $mpi_tasks_per_node -np $np $application $options"
