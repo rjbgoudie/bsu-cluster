@@ -12,7 +12,7 @@
 #! Name of the job: change this to anything you like
 #SBATCH -J darwinjob
 #! Which project should be charged:
-#SBATCH -A MRC-BSU-SL2
+#SBATCH -A MRC-BSU-SL3
 #! How many whole nodes should be allocated?
 #SBATCH --nodes=1
 #! How many cores (out of 16) do you need on each node?

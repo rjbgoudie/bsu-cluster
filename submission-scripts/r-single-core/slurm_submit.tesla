@@ -12,7 +12,7 @@
 #! Name of the job: change this to anything you like
 #SBATCH -J teslarjob
 #! Which project should be charged (NB Wilkes projects end in '-GPU'):
-#SBATCH -A MRC-BSU-SL2-GPU
+#SBATCH -A MRC-BSU-SL3-GPU
 #! How many whole nodes should be allocated?
 #SBATCH --nodes=1
 #! How many cores (out of 12) do you need on each node?
