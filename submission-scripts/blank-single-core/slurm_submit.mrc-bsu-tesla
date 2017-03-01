@@ -87,11 +87,11 @@ export I_MPI_PIN_ORDER=scatter # Adjacent domains have minimal sharing of caches
 #! Delete gpu_run_task.sh if you do _not_ wish to bind even MPI ranks to GPU0 and IB card0,
 #! and odd ranks to GPU1 and IB card1. This binding may improve performance and is
 #! REQUIRED for Turbostream.
-CMD="mpirun -ppn $mpi_tasks_per_node -np $np gpu_run_task.sh $application $options"
+#CMD="mpirun -ppn $mpi_tasks_per_node -np $np gpu_run_task.sh $application $options"
 
 #! Choose this for a pure shared-memory OpenMP parallel program on a single node:
 #! (OMP_NUM_THREADS threads will be created):
-#CMD="$application $options"
+CMD="$application $options"
 
 #! Choose this for a MPI code (possibly using OpenMP) using OpenMPI:
 #CMD="mpirun -npernode $mpi_tasks_per_node -np $np $application $options"
