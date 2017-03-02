@@ -18,7 +18,7 @@
 #! How many cores (out of 16) do you need on each node?
 #SBATCH --ntasks=1
 #! How big do you want your array of tasks, and how many to run at a time
-#SBATCH --array=1:4%2
+#SBATCH --array=1-4%2
 #! How much wallclock time will be required? Use format HH:MM:SS
 #SBATCH --time=01:00:00
 #! What types of email messages do you wish to receive?
