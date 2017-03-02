@@ -65,8 +65,9 @@ module add R
 #! sbatch slurm_submit.mrc-bsu-sand myrfile.R
 rscript="$1"
 
-#! Change this to change where the R log is saved
-routput="$1_$SLURM_ARRAY_TASK_ID.Rout"
+#! Change routput to change where the R log is saved
+base=$(basename ${1%.*})
+routput="${base}_${SLURM_ARRAY_TASK_ID}.Rout"
 
 #! Full path to application executable:
 application="R"
