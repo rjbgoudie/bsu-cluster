@@ -7,7 +7,7 @@ You will need to edit the following:
 ```sh
 #! Insert additional module load commands after this line if needed:
 module add python
-``
+```
 
 2. Line 59, which should be program you want to run. You might need the full path. For example to run `python`
 
