@@ -16,11 +16,11 @@ module add python
 application="python"
 ```
 
-3. Line 62, any options your program needs. For example to use the `-3` option in `python`, change to
+3. Line 62, any options your program needs. For example to use the `-3` option in `python` and run a file called `myfile.py` and save output in file called `myfile_out.txt`, change to
 
 ```sh
 #! Run options for the application:
-options="-3"
+options="-3 myfile.py myfile_out.txt"
 ```
 
 You may well need to edit the following:
