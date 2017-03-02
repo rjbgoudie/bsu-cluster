@@ -2,18 +2,25 @@ These are blank submission scripts. There is one for each queue/type of node.
 
 You will need to edit the following:
 
-1. Line 59, which should be the path to whatever program you want to run:
+1. Line 56, you may need to add `module` command to load whatever program you want to run. For example, to load `python`:
+
+```sh
+#! Insert additional module load commands after this line if needed:
+module add python
+``
+
+2. Line 59, which should be program you want to run. You might need the full path. For example to run `python`
 
 ```sh
 #! Full path to application executable:
-application=""
+application="python"
 ```
 
-2. Line 62, any options your program needs:
+3. Line 62, any options your program needs. For example to use the `-3` option in `python`, change to
 
 ```sh
 #! Run options for the application:
-options=""
+options="-3"
 ```
 
 You may well need to edit the following:
