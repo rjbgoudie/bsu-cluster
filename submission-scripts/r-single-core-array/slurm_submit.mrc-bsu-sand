@@ -62,10 +62,13 @@ module load default-impi                   # REQUIRED - loads the basic environm
 module add R
 
 #! Change this to the name of the R script you want to run
-#! If left as $@, you specify the filename when you run sbatch, e.g.
+#! If left as $1, you specify the filename when you run sbatch, e.g.
 #!
 #! sbatch slurm_submit.mrc-bsu-sand myrfile.R
-rscript="$@"
+rscript="$1"
+
+#! Change this to change where the R log is saved
+routput="$1_$SLURM_ARRAY_TASK_ID.Rout"
 
 #! Full path to application executable:
 application="R"
@@ -102,7 +105,7 @@ export I_MPI_PIN_ORDER=scatter # Adjacent domains have minimal sharing of caches
 
 #! Choose this for a pure shared-memory OpenMP parallel program on a single node:
 #! (OMP_NUM_THREADS threads will be created):
-CMD="$application $options $rscript"
+CMD="$application $options $rscript $routput"
 
 #! Choose this for a MPI code (possibly using OpenMP) using OpenMPI:
 #CMD="mpirun -npernode $mpi_tasks_per_node -np $np $application $options"
