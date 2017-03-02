@@ -13,7 +13,7 @@ You may well need to edit the following:
 #SBATCH --time=12:00:00
 ```
 
-You might want to edit the follow:
+You might want to edit the following:
 
 1. Line 13, which is the job name. This makes no difference, but changing it might make it easier to find your job when you run, for example, `squeue`. To change to `newjobtitle`
 
