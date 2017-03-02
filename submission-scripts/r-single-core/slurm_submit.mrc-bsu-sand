@@ -59,8 +59,11 @@ module load default-impi                   # REQUIRED - loads the basic environm
 # change the next line to: module add R/3.3.0
 module add R
 
-# Change this to the name of the R script you want to run
-rscript="myrscript.R"
+#! Change this to the name of the R script you want to run
+#! If left as $@, you specify the filename when you run sbatch, e.g.
+#!
+#! sbatch slurm_submit.mrc-bsu-sand myrfile.R
+rscript="$@"
 
 #! Full path to application executable:
 application="R"
