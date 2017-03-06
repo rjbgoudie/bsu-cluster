@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# R.J.B. Goudie
+# 2016-07-14: original version
+# 2017-01-15: added header
+#
+# To install
+# 1. put this file in ~/bin/bsu-queue-summary
+# 2. run the following so that it can be executed:
+#
+#     chmod +x ~/bin/bsu-queue-summary
+#
+# 3. Then it should run by typing 'bsu-queue-summary'
+
+echo "allocated/idle/other/total"
+sinfo --noheader --partition=mrc-bsu-sand,mrc-bsu-tesla --format="%P %C"
