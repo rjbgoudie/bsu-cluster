@@ -7,8 +7,12 @@ task_id <- as.numeric(task_id_string)
 seed <- c(425, 3453, 223, 232)[task_id]
 set.seed(seed)
 
-# draw 100 standard normals
-samples <- rnorm(100)
+# set a different mean for each task in the array
+means <- c(1, 2, 10, 20)
+mean <- means[task_id]
+
+# draw 100 normals, with the mean as above
+samples <- rnorm(100, mean = mean)
 
 # save the standard normals in a file
 # remember to give each task array item a diffent filename, otherwise they will
