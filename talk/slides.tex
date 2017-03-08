@@ -148,6 +148,18 @@ ssh-add ~/.ssh/id_rsa
 
 \end{frame}
 
+\begin{frame}[fragile]{Faff 3: continued}
+
+On macOS Sierra\footnote{\url{http://apple.stackexchange.com/a/254714}}, also need to add to your \mintinline{sh}{~/.ssh/config} the following:
+
+\begin{minted}{sh}
+Host *
+   UseKeychain yes
+   AddKeysToAgent yes
+\end{minted}
+
+\end{frame}
+
 \begin{frame}[fragile]{Faff 4: your internet connection dies, and you lose what you were doing}
 
 \begin{itemize}
