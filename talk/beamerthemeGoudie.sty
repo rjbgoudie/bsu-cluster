@@ -1,0 +1,81 @@
+% R.J.B. Goudie
+% 2016-12-01
+%
+% Minimal theme, with title underlining (using ulem) and
+
+\mode<presentation>
+
+% nice leading and underlining
+\RequirePackage{ulem,setspace}
+\setstretch{1.25}
+\setlength{\ULdepth}{0.4em}
+\normalem
+
+% colours
+\definecolor{navyblue}{HTML}{0E5968}
+\definecolor{highlightorange}{HTML}{D85B1D}
+\definecolor{bsugray}{HTML}{695C4A}
+\definecolor{ucyellow}{HTML}{FED417}
+\definecolor{ucred}{HTML}{D0282A}
+\definecolor{lightgraybg}{gray}{0.9}
+
+% margins, overall layout
+\setbeamersize{text margin left = 2em}
+\setbeamersize{text margin right = 2em}
+
+\setbeamertemplate{footline}%
+  {\hfill\insertframenumber/\inserttotalframenumber\(\,\)}
+\setbeamertemplate{navigation symbols}{}
+
+% title
+\setbeamertemplate{frametitle}[default]
+\setbeamertemplate{frametitle}{\uline{\insertframetitle}\par}
+\setbeamerfont{frametitle}{size=\normalsize}
+\setbeamercolor*{titlelike}{parent=palette primary,fg=navyblue}
+\setbeamercolor{frametitle}{bg=white,fg=navyblue}
+
+% general text
+\setbeamercolor{normal text}{fg=navyblue}
+\setbeamercolor{postit}{fg=white,bg=navyblue}
+\setbeamercolor{alerted text}{fg=highlightorange}
+
+% itemize and enumerate
+\useinnertheme{circles} % numbers in circles for enumerate
+
+\defbeamertemplate*%
+  {itemize item}%
+  {}%
+  {\tiny\raise4pt\hbox{\textbullet}}
+
+\defbeamertemplate*%
+  {itemize subitem}%
+  {}%
+  {\raise1.5pt\hbox{\donotcoloroutermaths$\centerdot$}}
+
+\defbeamertemplate*%
+  {itemize subsubitem}%
+  {}%
+  {\raise1.5pt\hbox{\donotcoloroutermaths$\centerdot$}}
+
+\setbeamertemplate{itemize item}{\color{navyblue}\textbullet}
+\setbeamercolor*{enumerate item}{fg=navyblue}
+\setbeamercolor*{enumerate subitem}{fg=navyblue}
+\setbeamercolor*{enumerate subsubitem}{fg=navyblue}
+\setbeamercolor{item projected}{fg=white,bg=navyblue}
+
+% captions, footnotes
+\setbeamerfont{footnote}{size=\scriptsize}
+\setbeamercolor{caption name}{fg=navyblue}
+
+% bibliography, references
+\setbeamercolor{bibliography item}{fg=navyblue}
+\setbeamercolor*{bibliography entry title}{fg=navyblue}
+\setbeamercolor{bibliography entry author}{fg=navyblue}
+\setbeamercolor{bibliography entry location}{fg=navyblue}
+\setbeamercolor{bibliography entry note}{fg=navyblue}
+
+% gradual reveal style
+\setbeamercovered{transparent}
+
+\mode
+<all>
