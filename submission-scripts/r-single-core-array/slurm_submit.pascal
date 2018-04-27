@@ -1,7 +1,7 @@
 #!/bin/bash
 #!
-#! Example SLURM job script for Darwin (Sandy Bridge, ConnectX3)
-#! Last updated: Sat Apr 18 13:05:53 BST 2015
+#! Example SLURM job script for Wilkes2 (Broadwell, ConnectX-4, P100)
+#! Last updated: Mon 13 Nov 12:06:57 GMT 2017
 #!
 
 #!#############################################################
@@ -10,15 +10,19 @@
 
 #! sbatch directives begin here ###############################
 #! Name of the job: change this to anything you like
-#SBATCH -J darwinrjob
-#! Which project should be charged:
-#SBATCH -A MRC-BSU-SL3
+#SBATCH -J pascal-rjob
+#! Which project should be charged (NB Wilkes2 projects end in '-GPU'):
+#SBATCH -A mrc-bsu-sl3-gpu
 #! How many whole nodes should be allocated?
 #SBATCH --nodes=1
-#! How many cores (out of 16) do you need on each node?
-#SBATCH --ntasks=1
+#! How many (MPI) tasks will there be in total?
+#! Note probably this should not exceed the total number of GPUs in use.
+#SBATCH --ntasks=4
 #! How big do you want your array of tasks, and how many to run at a time
 #SBATCH --array=1-4%2
+#! Specify the number of GPUs per node (between 1 and 4; must be 4 if nodes>1).
+#! Note that the job submission script will enforce no more than 3 cpus per GPU.
+#SBATCH --gres=gpu:4
 #! How much wallclock time will be required? Use format HH:MM:SS
 #SBATCH --time=01:00:00
 #! What types of email messages do you wish to receive?
@@ -28,18 +32,12 @@
 ##SBATCH --no-requeue
 
 #! Do not change:
-#SBATCH -p sandybridge
+#SBATCH -p pascal
 
 #! sbatch directives end here (put any additional directives above this line)
 
 #! Notes:
-#! Charging is determined by core number*walltime.
-#! The --ntasks value refers to the number of tasks to be launched by SLURM only. This
-#! usually equates to the number of MPI tasks launched. Reduce this from nodes*16 if
-#! demanded by memory requirements, or if OMP_NUM_THREADS>1.
-#! Each task is allocated 1 core by default, and each core is allocated 3994MB. If this
-#! is insufficient, also specify --cpus-per-task and/or --mem (the latter specifies
-#! MB per node).
+#! Charging is determined by GPU number*walltime.
 
 #! Number of nodes and tasks per node allocated by SLURM (do not change):
 numnodes=$SLURM_JOB_NUM_NODES
@@ -53,18 +51,28 @@ mpi_tasks_per_node=$(echo "$SLURM_TASKS_PER_NODE" | sed -e  's/^\([0-9][0-9]*\).
 #! (note that SLURM reproduces the environment at submission irrespective of ~/.bashrc):
 . /etc/profile.d/modules.sh                # Leave this line (enables the module command)
 module purge                               # Removes all modules still loaded
-module load default-impi                   # REQUIRED - loads the basic environment
+module load rhel7/default-gpu              # REQUIRED - loads the basic environment
 
 #! Insert additional module load commands after this line if needed:
 
 # If you want, say, R version 3.3.0 rather than the current default R version
-# change the next line to: module add R/3.3.0
-module add R
+# First run:
+#
+# module avail r
+#
+# and then choose a different version of R from the linux-rhel7-x86_64 section.
+# There are multiple versions of each R version, corresponding to different
+# ways in which R can be compiled (e.g. which BLAS library). To see what each
+# corresponds to, run:
+#
+# spack find -lv r
+#
+module add r-3.4.1-gcc-5.4.0-jubrpyn
 
 #! Change this to the name of the R script you want to run
 #! If left as $1, you specify the filename when you run sbatch, e.g.
 #!
-#! sbatch slurm_submit.mrc-bsu-sand myrfile.R
+#! sbatch slurm_submit.pascal myrfile.R
 rscript="$1"
 
 #! Change routput to change where the R log is saved
@@ -79,36 +87,20 @@ options="CMD BATCH --no-save --no-restore"
 
 #! Work directory (i.e. where the job will run):
 workdir="$SLURM_SUBMIT_DIR"  # The value of SLURM_SUBMIT_DIR sets workdir to the directory
-# in which sbatch is run.
+                             # in which sbatch is run.
 
 #! Are you using OpenMP (NB this is unrelated to OpenMPI)? If so increase this
-#! safe value to no more than 16:
+#! safe value to no more than 12:
 export OMP_NUM_THREADS=1
 
 #! Number of MPI tasks to be started by the application per node and in total (do not change):
 np=$[${numnodes}*${mpi_tasks_per_node}]
 
-#! The following variables define a sensible pinning strategy for Intel MPI tasks -
-#! this should be suitable for both pure MPI and hybrid MPI/OpenMP jobs:
-export I_MPI_PIN_DOMAIN=omp:compact # Domains are $OMP_NUM_THREADS cores in size
-export I_MPI_PIN_ORDER=scatter # Adjacent domains have minimal sharing of caches/sockets
-#! Notes:
-#! 1. These variables influence Intel MPI only.
-#! 2. Domains are non-overlapping sets of cores which map 1-1 to MPI tasks.
-#! 3. I_MPI_PIN_PROCESSOR_LIST is ignored if I_MPI_PIN_DOMAIN is set.
-#! 4. If MPI tasks perform better when sharing caches/sockets, try I_MPI_PIN_ORDER=compact.
-
-
-#! Uncomment one choice for CMD below (add mpirun/mpiexec options if necessary):
-
-#! Choose this for a MPI code (possibly using OpenMP) using Intel MPI.
-#CMD="mpirun -ppn $mpi_tasks_per_node -np $np $application $options"
-
 #! Choose this for a pure shared-memory OpenMP parallel program on a single node:
 #! (OMP_NUM_THREADS threads will be created):
 CMD="$application $options $rscript $routput"
 
-#! Choose this for a MPI code (possibly using OpenMP) using OpenMPI:
+#! Choose this for a MPI code using OpenMPI:
 #CMD="mpirun -npernode $mpi_tasks_per_node -np $np $application $options"
 
 

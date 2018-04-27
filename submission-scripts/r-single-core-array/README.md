@@ -1,7 +1,7 @@
-These are submission scripts for running ARRAY JOBS specifically for R. There is one for each queue/type of node. To run, for example, an R script called `myrfile.R` on `mrc-bsu-sand`, use
+These are submission scripts for running ARRAY JOBS specifically for R. There is one for each queue/type of node. To run, for example, an R script called `myrfile.R` on `bsu-cpu`, use
 
 ```sh
-sbatch slurm_submit.mrc-bsu-sand myrfile.R
+sbatch slurm_submit.bsu-cpu myrfile.R
 ```
 
 You may well need to edit the following:
@@ -30,12 +30,12 @@ You might want to edit the following:
 ```
 
 
-If you don't want to have to type `myrfile.R` at the end of each `sbatch` command every time, change line 66 to:
+If you don't want to have to type `myrfile.R` at the end of each `sbatch` command every time, change the following (about line 77):
 
 ```sh
 #! Change this to the name of the R script you want to run
-#! If left as $@, you specify the filename when you run sbatch, e.g.
+#! If left as $1, you specify the filename when you run sbatch, e.g.
 #!
-#! sbatch slurm_submit.mrc-bsu-sand myrfile.R
+#! sbatch slurm_submit.bsu-cpu myrfile.R
 rscript="myrfile.R"
 ```
