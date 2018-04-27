@@ -72,7 +72,7 @@ module add r-3.4.1-gcc-5.4.0-jubrpyn
 #! Change this to the name of the R script you want to run
 #! If left as $@, you specify the filename when you run sbatch, e.g.
 #!
-#! sbatch slurm_submit.mrc-bsu-sand myrfile.R
+#! sbatch slurm_submit.bsu-cpu myrfile.R
 rscript="$@"
 
 #! Full path to application executable:
@@ -83,7 +83,7 @@ options="CMD BATCH --no-save --no-restore"
 
 #! Work directory (i.e. where the job will run):
 workdir="$SLURM_SUBMIT_DIR"  # The value of SLURM_SUBMIT_DIR sets workdir to the directory
-# in which sbatch is run.
+                             # in which sbatch is run.
 
 #! Are you using OpenMP (NB this is unrelated to OpenMPI)? If so increase this
 #! safe value to no more than 16:
