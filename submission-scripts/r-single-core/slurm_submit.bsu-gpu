@@ -61,7 +61,17 @@ module load rhel7/default-gpu              # REQUIRED - loads the basic environm
 #
 # spack find -lv r
 #
-module add r-3.4.1-gcc-5.4.0-jubrpyn
+# 2018-05-03
+# DO NOT USE r-3.4.1-* MODULES ON bsu-* nodes because BLAS is utterly broken,
+# so basic linear algebra will NOT work. ie, do not use
+#
+# module add r-3.4.1-gcc-5.4.0-jubrpyn
+#
+# or
+# module add r-3.4.1-gcc-5.4.0-uj5r3tk
+#
+# The r-3.4.0-* modules seem to be OK
+module add r-3.4.0-gcc-5.4.0-j3fc64x
 
 #! Change this to the name of the R script you want to run
 #! If left as $@, you specify the filename when you run sbatch, e.g.
